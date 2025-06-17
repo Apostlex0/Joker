@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Joker.CodeAnalysis
 {
-    class Parser
+    internal sealed class Parser
     {
         private readonly SyntaxToken[] _tokens;
 
@@ -22,7 +22,7 @@ namespace Joker.CodeAnalysis
                 if (token.Kind != SyntaxKind.WhitespaceToken &&
                     token.Kind != SyntaxKind.BadToken)
                 {
-                    tokens.Add(token);   
+                    tokens.Add(token);
                 }
             } while (token.Kind != SyntaxKind.EndOfFileToken);
 
@@ -50,7 +50,7 @@ namespace Joker.CodeAnalysis
             return current;
         }
 
-        private SyntaxToken Match(SyntaxKind kind)
+        private SyntaxToken MatchToken(SyntaxKind kind)
         {
             if (Current.Kind == kind)
                 return NextToken();
@@ -66,8 +66,8 @@ namespace Joker.CodeAnalysis
 
         public SyntaxTree Parse()
         {
-            var expresion = ParseTerm();
-            var endOfFileToken = Match(SyntaxKind.EndOfFileToken);
+            var expresion = ParseExpression();
+            var endOfFileToken = MatchToken(SyntaxKind.EndOfFileToken);
             return new SyntaxTree(_diagnostics, expresion, endOfFileToken);
         }
 
@@ -107,12 +107,12 @@ namespace Joker.CodeAnalysis
             {
                 var left = NextToken();
                 var expression = ParseExpression();
-                var right = Match(SyntaxKind.CloseParenthesisToken);
+                var right = MatchToken(SyntaxKind.CloseParenthesisToken);
                 return new ParenthesizedExpressionSyntax(left, expression, right);
             }
 
-            var numberToken = Match(SyntaxKind.NumberToken);
-            return new NumberExpressionSyntax(numberToken);
+            var literalToken = MatchToken(SyntaxKind.LiteralToken);
+            return new LiteralExpressionSyntax(literalToken);
         }
     }
 }
