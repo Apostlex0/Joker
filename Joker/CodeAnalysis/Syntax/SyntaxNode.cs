@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Joker.CodeAnalysis
+namespace Joker.CodeAnalysis.Syntax
 {
     public abstract class SyntaxNode
     {

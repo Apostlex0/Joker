@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-namespace Joker.CodeAnalysis
+namespace Joker.CodeAnalysis.Syntax
 {
     internal static class SyntaxFacts
     {   

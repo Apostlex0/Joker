@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Joker.CodeAnalysis
+namespace Joker.CodeAnalysis.Syntax
 {
     public sealed class SyntaxToken : SyntaxNode
     {

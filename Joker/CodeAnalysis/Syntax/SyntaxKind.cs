@@ -1,4 +1,4 @@
-namespace Joker.CodeAnalysis
+namespace Joker.CodeAnalysis.Syntax
 {
     public enum SyntaxKind
     {

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Joker.CodeAnalysis;
+using Joker.CodeAnalysis.Binding;
+using Joker.CodeAnalysis.Syntax;
 
 namespace Joker
 {
@@ -32,17 +34,21 @@ namespace Joker
                 }
 
                 var syntaxTree = SyntaxTree.Parse(line);
+                var binder = new Binder();
+                var boundExpression = binder.BindExpression(syntaxTree.Root);
+
+                var diagnostics = syntaxTree.Diagnostics.Concat(binder.Diagnostics).ToArray();
 
                 if (showTree)
                 {
-                    Console.ForegroundColor = ConsoleColor.DarkGray;                
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
                     PrettyPrint(syntaxTree.Root);
                     Console.ResetColor();
                 }
 
-                if (!syntaxTree.Diagnostics.Any())
+                if (!diagnostics.Any())
                 {
-                    var e = new Evaluator(syntaxTree.Root);
+                    var e = new Evaluator(boundExpression);
                     var result = e.Evaluate();
                     Console.WriteLine(result);
                 }
@@ -50,7 +56,7 @@ namespace Joker
                 {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
 
-                    foreach (var diagnostic in syntaxTree.Diagnostics)
+                    foreach (var diagnostic in diagnostics)
                         Console.WriteLine(diagnostic);
 
                     Console.ResetColor();
