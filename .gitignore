@@ -91,4 +91,6 @@ target/
 # Temporary files
 *.tmp
 *.temp
-.cache/
+.cache/**/bin/
+**/obj/
+.vs/
