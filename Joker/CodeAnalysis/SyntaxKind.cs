@@ -1,7 +1,7 @@
 namespace Joker.CodeAnalysis
 {
     public enum SyntaxKind
-    {   
+    {
         LiteralToken,
         WhitespaceToken,
         PlusToken,
@@ -14,6 +14,7 @@ namespace Joker.CodeAnalysis
         EndOfFileToken,
         LiteralExpression,
         BinaryExpression,
-        ParenthesizedExpression
+        ParenthesizedExpression,
+        UnaryExpression
     }
 }
