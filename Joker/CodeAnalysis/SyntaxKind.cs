@@ -1,6 +1,6 @@
 namespace Joker.CodeAnalysis
 {
-    enum SyntaxKind
+    public enum SyntaxKind
     {   
         LiteralToken,
         WhitespaceToken,
