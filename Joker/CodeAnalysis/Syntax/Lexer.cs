@@ -26,6 +26,19 @@ namespace Joker.CodeAnalysis.Syntax
             }
         }
 
+        private char Cuurent => Peek(0);
+
+        private char Lookahead => Peek(1);
+
+        private char Peek(int offset)
+        {
+            var index = _position + offset;
+            if (index >= _text.Length)
+                return '\0';
+
+            return _text[index];
+        }
+
         private void Next()
         {
             _position++;
@@ -81,19 +94,29 @@ namespace Joker.CodeAnalysis.Syntax
             }
 
             switch (Current)
-                {
-                    case '+':
-                        return new SyntaxToken(SyntaxKind.PlusToken, _position++, "+", null);
-                    case '-':
-                        return new SyntaxToken(SyntaxKind.MinusToken, _position++, "-", null);
-                    case '*':
-                        return new SyntaxToken(SyntaxKind.StarToken, _position++, "*", null);
-                    case '/':
-                        return new SyntaxToken(SyntaxKind.SlashToken, _position++, "/", null);
-                    case '(':
-                        return new SyntaxToken(SyntaxKind.OpenParenthesisToken, _position++, "(", null);
-                    case ')':
-                        return new SyntaxToken(SyntaxKind.CloseParenthesisToken, _position++, ")", null);
+            {
+                case '+':
+                    return new SyntaxToken(SyntaxKind.PlusToken, _position++, "+", null);
+                case '-':
+                    return new SyntaxToken(SyntaxKind.MinusToken, _position++, "-", null);
+                case '*':
+                    return new SyntaxToken(SyntaxKind.StarToken, _position++, "*", null);
+                case '/':
+                    return new SyntaxToken(SyntaxKind.SlashToken, _position++, "/", null);
+                case '(':
+                    return new SyntaxToken(SyntaxKind.OpenParenthesisToken, _position++, "(", null);
+                case ')':
+                    return new SyntaxToken(SyntaxKind.CloseParenthesisToken, _position++, ")", null);
+                case '!':
+                    return new SyntaxToken(SyntaxKind.BangToken, _position++, "!", null);
+                case '&':
+                    if (Lookahead == '&')
+                        return new SyntaxToken(SyntaxKind.AmpersandAmpersandToken, _position+=2, "&&", null);
+                    break;
+                case '|':
+                    if (Lookahead == '|')
+                        return new SyntaxToken(SyntaxKind.PipePipeToken, _position+=2, "||", null);
+                    break;
                 }
 
             _diagnostics.Add($"ERROR: bad character input: '{Current}'");
