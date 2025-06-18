@@ -94,3 +94,4 @@ target/
 .cache/**/bin/
 **/obj/
 .vs/
+**/bin/
