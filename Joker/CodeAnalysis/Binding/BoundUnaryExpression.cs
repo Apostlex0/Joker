@@ -4,15 +4,15 @@ namespace Joker.CodeAnalysis.Binding
 {
     internal sealed class BoundUnaryExpression : BoundExpression
     {
-        public BoundUnaryExpression(BoundUnaryOperatorKind operatorKind, BoundExpression operand)
+        public BoundUnaryExpression(BoundUnaryOperator Op, BoundExpression operand)
         {
-            OperatorKind = operatorKind;
+            Op = operand;
             Operand = operand;
         }
 
         public override BoundNodeKind Kind => BoundNodeKind.UnaryExpression;
         public override Type Type => Operand.Type;
-        public BoundUnaryOperatorKind OperatorKind { get; }
+        public BoundUnaryOperator Op { get; }
         public BoundExpression Operand { get; }
     }
 }
