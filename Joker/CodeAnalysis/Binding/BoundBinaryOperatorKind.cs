@@ -6,6 +6,8 @@ namespace Joker.CodeAnalysis.Binding
         Subtraction,
         Multiplication,
         Division,
+        Equals,
+        NotEquals,
         LogicalAnd,
         LogicalOr
     }

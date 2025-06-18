@@ -9,6 +9,8 @@ namespace Joker.CodeAnalysis.Syntax
         StarToken,
         SlashToken,
         BangToken,
+        EqualsEqualsToken,
+        BangEqualsToken,
         AmpersandAmpersandToken,
         PipePipeToken,
         OpenParenthesisToken,
