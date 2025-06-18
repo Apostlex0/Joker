@@ -96,16 +96,31 @@ namespace Joker.CodeAnalysis.Syntax
 
         private ExpressionSyntax ParsePrimaryExpression()
         {
-            if (Current.Kind == SyntaxKind.OpenParenthesisToken)
+            switch (Current.Kind)
             {
-                var left = NextToken();
-                var expression = ParseExpression();
-                var right = MatchToken(SyntaxKind.CloseParenthesisToken);
-                return new ParenthesizedExpressionSyntax(left, expression, right);
-            }
+                case SyntaxKind.OpenParenthesisToken:
+                    {
+                        var left = NextToken();
+                        var expression = ParseExpression();
+                        var right = MatchToken(SyntaxKind.CloseParenthesisToken);
+                        return new ParenthesizedExpressionSyntax(left, expression, right);
+                    }
 
-            var literalToken = MatchToken(SyntaxKind.LiteralToken);
-            return new LiteralExpressionSyntax(literalToken);
+                case SyntaxKind.FalseKeyword:
+                case SyntaxKind.TrueKeyword:
+                    {
+                        var keywordToken = NextToken();
+                        var value = Current.Kind == SyntaxKind.TrueKeyword;
+                        return new LiteralExpressionSyntax(keywordToken, value);
+                    }
+
+                default:
+                    {
+                        var numberToken = MatchToken(SyntaxKind.LiteralToken);
+                        return new LiteralExpressionSyntax(numberToken);
+                    }
+
+            }
         }
     }
 }
