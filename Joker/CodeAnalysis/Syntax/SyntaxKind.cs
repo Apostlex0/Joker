@@ -12,9 +12,16 @@ namespace Joker.CodeAnalysis.Syntax
         CloseParenthesisToken,
         BadToken,
         EndOfFileToken,
+        IdentifierToken,
+
+        //Expressions
         LiteralExpression,
         BinaryExpression,
         ParenthesizedExpression,
-        UnaryExpression
+        UnaryExpression,
+
+        // Keywords
+        TrueKeyword,
+        FalseKeyword
     }
 }
