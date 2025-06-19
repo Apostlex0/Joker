@@ -9,6 +9,7 @@ namespace Joker.CodeAnalysis.Syntax
         StarToken,
         SlashToken,
         BangToken,
+        EqualsToken,
         EqualsEqualsToken,
         BangEqualsToken,
         AmpersandAmpersandToken,
@@ -21,6 +22,8 @@ namespace Joker.CodeAnalysis.Syntax
 
         //Expressions
         LiteralExpression,
+        NameExpression,
+        AssignmentExpression,
         BinaryExpression,
         ParenthesizedExpression,
         UnaryExpression,
