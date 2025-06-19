@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Minsk.CodeAnalysis.Syntax
+namespace Joker.CodeAnalysis.Syntax
 {
     public sealed class NameExpressionSyntax : ExpressionSyntax
     {

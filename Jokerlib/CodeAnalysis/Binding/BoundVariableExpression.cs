@@ -1,6 +1,6 @@
 using System;
 
-namespace Minsk.CodeAnalysis.Binding
+namespace Joker.CodeAnalysis.Binding
 {
     internal sealed class BoundVariableExpression : BoundExpression
     {

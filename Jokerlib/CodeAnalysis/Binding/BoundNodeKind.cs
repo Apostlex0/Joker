@@ -4,6 +4,8 @@ namespace Joker.CodeAnalysis.Binding
     {
         LiteralExpression,
         UnaryExpression,
-        BinaryExpression
+        BinaryExpression,
+        AssignmentExpression,
+        VariableExpression,
     }
 }
