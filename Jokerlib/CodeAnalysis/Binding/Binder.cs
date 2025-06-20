@@ -7,9 +7,9 @@ namespace Joker.CodeAnalysis.Binding
     internal sealed class Binder
     {
         private readonly DiagnosticBag _diagnostics = new DiagnosticBag();
-        private readonly Dictionary<string, object> _variables;
+        private readonly Dictionary<VariableSymbol, object> _variables;
 
-        public Binder(Dictionary<string, object> variables)
+        public Binder(Dictionary<VariableSymbol, object> variables)
         {
             _variables = variables;
         }
@@ -41,13 +41,15 @@ namespace Joker.CodeAnalysis.Binding
         private BoundExpression BindNameExpression(NameExpressionSyntax syntax)
         {
             var name = syntax.IdentifierToken.Text;
-            if (!_variables.TryGetValue(name, out var value))
+            var variable = _variables.Keys.FirstOrDefault(v => v.Name == name);
+
+            if (variable == null)
             {
                 _diagnostics.ReportUndefinedName(syntax.IdentifierToken.Span, name);
-                return new BoundLiteralExpression(0);
+                return new BoundLiteralExpression(0); // default to int type
             }
-            var type = value.GetType();
-            return new BoundVariableExpression(name, type);
+
+            return new BoundVariableExpression(variable);
         }
 
         private BoundExpression BindAssignmentExpression(AssignmentExpressionSyntax syntax)
@@ -55,18 +57,16 @@ namespace Joker.CodeAnalysis.Binding
             var name = syntax.IdentifierToken.Text;
             var boundExpression = BindExpression(syntax.Expression);
 
-            var defaultValue =
-                boundExpression.Type == typeof(int)
-                    ? (object)0
-                    : boundExpression.Type == typeof(bool)
-                        ? (object)false
-                        : null;
-            
-            if(defaultValue == null)
-                throw new Exception($"Unexpected type {boundExpression.Type} for assignment");
+            var existingVariable = _variables.Keys.FirstOrDefault(v => v.Name == name);
+            // this is done so that is the variable is assigned new value with new type , the old variable is now removed
+            // and a new variable is created with the new type
+            if (existingVariable != null)
+                _variables.Remove(existingVariable);
+                
+            var variable = new VariableSymbol(name, boundExpression.Type);
 
-            _variables[name] = defaultValue;
-            return new BoundAssignmentExpression(name, boundExpression);
+            _variables[variable] = null;
+            return new BoundAssignmentExpression(variable, boundExpression);
         }
 
         private BoundExpression BindParenthesizedExpression(ParenthesizedExpressionSyntax syntax)

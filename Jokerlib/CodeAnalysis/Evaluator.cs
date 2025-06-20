@@ -6,10 +6,10 @@ namespace Joker.CodeAnalysis.Binding
     internal sealed class Evaluator
     {
         private readonly BoundExpression _root;
-        private readonly Dictionary<string, object> _variables;
+        private readonly Dictionary<VariableSymbol, object> _variables;
 
         // in Dictionary string corresponds to variable name and object is the value of the variable
-        public Evaluator(BoundExpression root, Dictionary<string, object> variables)
+        public Evaluator(BoundExpression root, Dictionary<VariableSymbol, object> variables)
         {
             _root = root;
             _variables = variables;
@@ -26,12 +26,12 @@ namespace Joker.CodeAnalysis.Binding
                 return n.Value;
                 
             if (node is BoundVariableExpression v)
-                return _variables[v.Name];
+                return _variables[v.Variable];
 
             if (node is BoundAssignmentExpression a)
             {
                 var value = EvaluateExpression(a.Expression);
-                _variables[a.Name] = value;
+                _variables[a.Variable] = value;
                 return value;
             }
 
