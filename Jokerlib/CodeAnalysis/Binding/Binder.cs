@@ -21,10 +21,20 @@ namespace Joker.CodeAnalysis.Binding
                 case SyntaxKind.BinaryExpression:
                     return BindBinaryExpression((BinaryExpressionSyntax)syntax);
                 case SyntaxKind.ParenthesizedExpression:
-                    return BindExpression(((ParenthesizedExpressionSyntax)syntax).Expression);
+                    return BindParenthesizedExpression((ParenthesizedExpressionSyntax)syntax);
+                case SyntaxKind.NameExpression:
+                    return BindNameExpression((NameExpressionSyntax)syntax);
+                case SyntaxKind.AssignmentExpressionSyntax:
+                    return BindAssignmentExpression((AssignmentExpressionSyntax)syntax);
                 default:
                     throw new Exception($"Unexpected syntax {syntax.Kind}");
             }
+        }
+        
+
+        private BoundExpression BindParenthesizedExpression(ParenthesizedExpressionSyntax syntax)
+        {
+            return BindExpression(syntax.Expression);
         }
 
         private BoundExpression BindLiteralExpression(LiteralExpressionSyntax syntax)

@@ -46,10 +46,6 @@ namespace Joker.CodeAnalysis.Syntax
 
         public SyntaxToken Lex()
         {
-            // <numbers>
-            // + - * / ( )
-            // <whitespace>
-
             if (_position >= _text.Length)
                 return new SyntaxToken(SyntaxKind.EndOfFileToken, _position, "\0", null);
                 
