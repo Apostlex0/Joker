@@ -1,4 +1,3 @@
-using system;
 namespace Joker.CodeAnalysis
 {
     public sealed class VariableSymbol
