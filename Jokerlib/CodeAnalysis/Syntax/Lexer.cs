@@ -128,7 +128,7 @@ namespace Joker.CodeAnalysis.Syntax
                     if (Lookahead == '=')
                     {
                         _position += 2;
-                        return new SyntaxToken(SyntaxKind.BangEqualsToken, start, "==", null);
+                        return new SyntaxToken(SyntaxKind.BangEqualsToken, start, "!=", null);
                     }
                     else
                     {
