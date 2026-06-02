@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Joker.CodeAnalysis.Syntax
 {
     public sealed class NameExpressionSyntax : ExpressionSyntax
@@ -11,10 +9,5 @@ namespace Joker.CodeAnalysis.Syntax
 
         public override SyntaxKind Kind => SyntaxKind.NameExpression;
         public SyntaxToken IdentifierToken { get; }
-
-        public override IEnumerable<SyntaxNode> GetChildren()
-        {
-            yield return IdentifierToken;
-        }
     }
 }

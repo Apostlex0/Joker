@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Joker.CodeAnalysis.Syntax
 {
     public sealed class UnaryExpressionSyntax : ExpressionSyntax
@@ -13,12 +11,5 @@ namespace Joker.CodeAnalysis.Syntax
         public override SyntaxKind Kind => SyntaxKind.UnaryExpression;
         public SyntaxToken OperatorToken { get; }
         public ExpressionSyntax Operand { get; }
-
-        public override IEnumerable<SyntaxNode> GetChildren()
-        {
-            yield return OperatorToken;
-            yield return Operand;
-        }
     }
-
 }

@@ -1,3 +1,5 @@
+using Joker.CodeAnalysis.Text;
+
 namespace Joker.CodeAnalysis
 {
     public sealed class Diagnostic
